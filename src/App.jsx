@@ -1,10 +1,10 @@
-import ModeToggler from './Components/ModeToggler';
+import Heading from './Components/Heading';
 import './App.css'
 
 export default function App() {
   return (
     <div>
-     <ModeToggler />
+     <Heading />
     </div>
   )
 }
