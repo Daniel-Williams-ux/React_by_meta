@@ -1,10 +1,10 @@
-import Heading from './components/Heading';
+
 import './App.css'
 
-export default function App() {
+export default function App(props) {
   return (
     <div>
-     <Heading />
+     <h1>{props.Title}</h1>
     </div>
   )
 }
