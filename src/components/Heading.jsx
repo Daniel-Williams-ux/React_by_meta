@@ -1,16 +1,14 @@
-function Heading() {
-  let title = "This is my heading"
+function Heading(props) {
   return (
-    <h1>{title}</h1>
+<div className="hero">
+  <div className="container">
+    <div className="header"> 
+      <h1>{props.greet} My Header Page</h1>
+ <p>This is a paragraph</p>    
+    </div>
+  </div>
+</div>
   );
 };
 
 export default Heading;
-
-//Learnt fuctional compnents
-//JSX
-//Rendering and transpilling
-
-/*There are two tpes of export:
-1. default export -->export default App - Here esport name is the same as function name
-2. named export --> export {App} - function name is different from file name*/
