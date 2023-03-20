@@ -1,10 +1,10 @@
-import Btn from './components/Btn';
+import ModeToggler from './components/ModeToggler';
 import './App.css'
 
 export default function App() {
   return (
     <div>
-      <Btn />
+      <ModeToggler />
     </div>
   )
 }
