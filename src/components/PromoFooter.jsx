@@ -5,8 +5,8 @@ function PromoFooter(props) {
     <div className={css(styles.footer)}>
       <div className={css(subFooter.container)}>
         <h1>Footer</h1>
-        <h2>props.heading</h2>
-        <h3>props.callToAction</h3>
+        <h2>{props.heading}</h2>
+        <h3>{props.callToAction}</h3>
       </div>
     </div>
   )
