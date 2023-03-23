@@ -1,17 +1,131 @@
-## Running React on Repl.it
+# Aphrodite [![npm version](https://badge.fury.io/js/aphrodite.svg)](https://badge.fury.io/js/aphrodite) [![Build Status](https://travis-ci.org/Khan/aphrodite.svg?branch=master)](https://travis-ci.org/Khan/aphrodite) [![Coverage Status](https://coveralls.io/repos/github/Khan/aphrodite/badge.svg?branch=master)](https://coveralls.io/github/Khan/aphrodite?branch=master) [![Gitter chat](https://img.shields.io/gitter/room/Khan/aphrodite.svg)](https://gitter.im/Khan/aphrodite) [![gzip size][gzip-badge]][unpkg-dist] [![size][size-badge]][unpkg-dist]
 
-[React](https://reactjs.org/) is a popular JavaScript library for building user interfaces.
+_Framework-agnostic CSS-in-JS with support for server-side rendering, browser prefixing, and minimum CSS generation._
 
-[Vite](https://vitejs.dev/) is a blazing fast frontend build tool that includes features like Hot Module Reloading (HMR), optimized builds, and TypeScript support out of the box.
+Support for colocating your styles with your JavaScript component.
 
-Using the two in conjunction is one of the fastest ways to build a web app.
+- Works great with and without React
+- Supports media queries without window.matchMedia
+- Supports pseudo-selectors like `:hover`, `:active`, etc. without needing to
+  store hover or active state in components. `:visited` works just fine too.
+- Supports automatic global `@font-face` detection and insertion.
+- Respects precedence order when specifying multiple styles
+- Requires no AST transform
+- Injects only the exact styles needed for the render into the DOM.
+- Can be used for server rendering
+- Few dependencies, small (20k, 6k gzipped)
+- No external CSS file generated for inclusion
+- Autoprefixes styles
 
-### Getting Started
-- Hit run
-- Edit [App.jsx](#src/App.jsx) and watch it live update!
+# Installation
 
-By default, Replit runs the `dev` script, but you can configure it by changing the `run` field in the [configuration file](#.replit). Here are the vite docs for [serving production websites](https://vitejs.dev/guide/build.html)
+Aphrodite is distributed via [npm](https://www.npmjs.com/):
 
-### Typescript
+```
+npm install --save aphrodite
+```
 
-Just rename any file from `.jsx` to `.tsx`. You can also try our [TypeScript Template](https://replit.com/@replit/React-TypeScript)
+# API
+
+If you'd rather watch introductory videos, you can find them [here](https://www.youtube.com/playlist?list=PLo4Zh55ZzNSBP78pCD0dZJi9zf8CA72_M).
+
+```jsx
+import React, { Component } from 'react';
+import { StyleSheet, css } from 'aphrodite';
+
+class App extends Component {
+    render() {
+        return <div>
+            <span className={css(styles.red)}>
+                This is red.
+            </span>
+            <span className={css(styles.hover)}>
+                This turns red on hover.
+            </span>
+            <span className={css(styles.small)}>
+                This turns red when the browser is less than 600px width.
+            </span>
+            <span className={css(styles.red, styles.blue)}>
+                This is blue.
+            </span>
+            <span className={css(styles.blue, styles.small)}>
+                This is blue and turns red when the browser is less than
+                600px width.
+            </span>
+        </div>;
+    }
+}
+
+const styles = StyleSheet.create({
+    red: {
+        backgroundColor: 'red'
+    },
+
+    blue: {
+        backgroundColor: 'blue'
+    },
+
+    hover: {
+        ':hover': {
+            backgroundColor: 'red'
+        }
+    },
+
+    small: {
+        '@media (max-width: 600px)': {
+            backgroundColor: 'red',
+        }
+    }
+});
+```
+
+## Conditionally Applying Styles
+
+Note: If you want to conditionally use styles, that is simply accomplished via:
+
+```jsx
+const className = css(
+  shouldBeRed() ? styles.red : styles.blue,
+  shouldBeResponsive() && styles.small,
+  shouldBeHoverable() && styles.hover
+)
+
+<div className={className}>Hi</div>
+```
+
+This is possible because any falsey arguments will be ignored.
+
+## Combining Styles
+
+To combine styles, pass multiple styles or arrays of styles into `css()`. This is common when combining styles from an owner component:
+
+```jsx
+class App extends Component {
+    render() {
+        return <Marker styles={[styles.large, styles.red]} />;
+    }
+}
+
+class Marker extends Component {
+    render() {
+        // css() accepts styles, arrays of styles (including nested arrays),
+        // and falsy values including undefined.
+        return <div className={css(styles.marker, this.props.styles)} />;
+    }
+}
+
+const styles = StyleSheet.create({
+    red: {
+        backgroundColor: 'red'
+    },
+
+    large: {
+        height: 20,
+        width: 20
+    },
+
+    marker: {
+        backgroundColor: 'blue'
+    }
+});
+```

@@ -1,24 +1,10 @@
+import { StyleSheet, css } from  'aphrodite';
+
 function PromoHeading(props) {
-  const divStyle  = {
-    backgroundColor: "azure",
-  }
-
-  const container = {
-    width: "80%",
-  }
-
-  const hero = {
-    color: "red",
-  }
   return (
-    <div 
-      style={divStyle}>
-      <div 
-        style={container}>
-        <h1 
-          style={hero}>
-          Heading
-        </h1>
+    <div className={css(styles.header)}>
+      <div className={css(subHeader.container)}>
+        <h1>Heading</h1>
         <h2>{props.heading}</h2>
         <h3>{props.callToAction}</h3>
       </div>
@@ -27,3 +13,18 @@ function PromoHeading(props) {
 }
 
 export default PromoHeading;
+
+const styles = StyleSheet.create({
+  header: {
+     background: "gray",
+  }
+})
+
+const subHeader = StyleSheet.create({
+  container: {
+    background: "skyblue",
+    width: "80%",
+    maxWidth: "780px",
+    margin: "0 auto",
+  }
+})
