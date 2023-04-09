@@ -1,10 +1,16 @@
-import Reducer from './components/Reducer';
+import React from 'react';
+import { MealsProvider } from './providers/MealsProvider';
+import MealsList from './components/MealsList';
+import Counter from './components/Counter';
 import './App.css'
 
-export default function App() {
+function App() {
   return (
-    <div>
-       <Reducer /> 
-    </div>
-  )
+    <MealsProvider>
+      <Counter />
+      <MealsList />
+    </MealsProvider>
+  );
 }
+
+export default App;
