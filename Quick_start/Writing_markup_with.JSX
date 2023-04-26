@@ -11,3 +11,6 @@ function AboutPage() {
     </>
   );
 }
+
+
+//If you have a lot of HTML to port to JSX, you can use an online converter(https://transform.tools/html-to-jsx)
