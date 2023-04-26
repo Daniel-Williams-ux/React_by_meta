@@ -58,3 +58,41 @@ function MyButton() {
     </button>
   );
 }
+
+//To make both MyButton components display the same count and update together, you need to move the state from the individual buttons “upwards” to the closest 
+//component containing all of them.
+//In this example, it is MyApp:
+const Button = ({count, onClick}) => {
+  return (
+    <>
+      <h1>Button Count</h1>
+      <button onClick={onClick}>
+        You clicked me {count} times
+      </button>
+      </>
+  );
+};
+
+export default Button;
+
+
+import React from 'react';
+import { useState } from 'react';
+import Button from './components/Button'
+import './App.css'
+
+function App() {
+
+  const [count, setCount] = useState(0);
+
+  function handleClicked() {
+    setCount(count + 1)
+  }  
+  return (
+    <div>
+      <Button count={count} onClick={handleClicked} />
+       <Button count={count} onClick={handleClicked} />
+    </div>
+  );
+}
+export default App;
