@@ -71,3 +71,21 @@ class MyComponent extends React.Component {
     }
   }
 };
+
+
+//or
+function MyComponent(props) {
+  const [visibility, setVisibility] = React.useState(false);
+
+  const toggleVisibility = () => {
+    setVisibility(prevVisibility => !prevVisibility);
+  };
+
+  return (
+    <div>
+      <button onClick={toggleVisibility}>Click Me</button>
+      {visibility && <h1>Now you see me!</h1>}
+    </div>
+  );
+}
+
